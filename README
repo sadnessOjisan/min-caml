@@ -1,9 +1,3 @@
-
-```sh
-docker pull i386/centos:6
-docker run -it --rm i386/centos:6 /bin/bash
-```
-
 ```
 make
 
@@ -68,6 +62,36 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 make: *** [test/print] Error 1
 ```
 
+Dockerから実行する
+
+https://qiita.com/takaya030/items/cb1a75dda86643d35224
+
+
+```sh
+docker pull i386/centos:6
+docker run -it --rm i386/centos:6 /bin/bash
+```
+
+```
+[root@09c4393e474a /]# sed -i 's/$basearch/i386/g' /etc/yum.repos.d/CentOS-*.repo
+[root@09c4393e474a /]# yum install git ocaml
+
+git clone https://github.com/sadnessOjisan/min-caml.git
+
+cd min-caml/
+
+./to_x86
+
+make
+
+./min-caml test/adder
+
+[root@09c4393e474a min-caml]# min-caml test/adder
+adder      adder.ans  adder.cmp  adder.ml   adder.res  adder.s 
+
+[root@09c4393e474a min-caml]# less test/adder.res
+10
+```
 
 ---
 
